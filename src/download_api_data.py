@@ -75,7 +75,7 @@ def download_firms_data():
 
 
     # Output file
-    OUTPUT_FILE = OUTPUT_DIR / "wildfires_global_3days.geojson"
+    OUTPUT_FILE = OUTPUT_DIR / "wildfires_raw.geojson"
 
 
  # =========================================================
