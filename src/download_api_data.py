@@ -1,5 +1,5 @@
 """
-Script download_api_data.py
+Script: download_api_data.py
 
 NASA FIRMS Wildfire API
 --------------------------------

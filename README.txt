@@ -26,3 +26,9 @@ Big mistake to avoid
 Never assume the reviewer knows where your data is stored, 
 which specific packages you used, or the order in which to run your files. 
 State everything explicitly in the README.
+
+
+Research Question:
+"Where are high-intensity wildfire events occurring globally
+within the last 72 hours, and how high is the potential
+humanitarian risk based on distance to densely populated areas?"

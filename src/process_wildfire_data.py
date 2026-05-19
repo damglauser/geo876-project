@@ -1,5 +1,5 @@
 """
-Script process_wildfire_data.py
+Script: process_wildfire_data.py
 
 NASA FIRMS Wildfire Data Processing
 -------
@@ -16,6 +16,9 @@ This script follows GIS data engineering principles:
 - GeoPackage export
 
 """
+# =========================================================
+# IMPORT LIBRARIES
+# =========================================================
 
 from pathlib import Path
 import logging
@@ -43,7 +46,7 @@ PROCESSED_DATA_PATH = (
 TARGET_CRS = "EPSG:3857"
 
 # Minimum confidence threshold
-MIN_CONFIDENCE = "h" # "h" for high confidence only
+MIN_CONFIDENCE = ["n", "h"]  # "n" for nominal,"h" for high confidence 
 
 # Columns to keep
 KEEP_COLUMNS = [
@@ -266,13 +269,13 @@ def filter_confidence(
         .astype(str)
         .str.strip()
         .str.lower()
-        .str.contains("h", na=False)
+        .isin(min_confidence)
     ]
 
     after = len(gdf)
 
     logger.info(
-        f"Removed {before - after} low- and nominal-confidence detections."
+        f"Removed {before - after} low-confidence detections."
     )
 
     return gdf
