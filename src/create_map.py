@@ -28,8 +28,8 @@ from pathlib import Path
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-INPUT_DIR = BASE_DIR / "outputs"
-OUTPUT_DIR = BASE_DIR / "outputs" / "maps"
+INPUT_DIR = BASE_DIR / "data"/ "outputs"
+OUTPUT_DIR = BASE_DIR / "maps"
 
 OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
 
@@ -45,6 +45,34 @@ wildfires = gpd.read_file(
 )
 
 print(f"Loaded {len(wildfires)} wildfire events")
+
+
+# =========================================================
+# CREATE CITY DATASET
+# =========================================================
+
+cities = (
+    wildfires[
+        ["city", "country", "population", "geometry"]
+    ]
+    .dropna(subset=["city", "population"])
+    .copy()
+)
+
+# Keep only cities with more than 500k population
+cities = cities[cities["population"] >= 500000]
+
+# Remove duplicates
+cities = cities.drop_duplicates(subset=["city", "country"])
+
+
+# =========================================================
+# CREATE CITY LAYER
+# =========================================================
+
+city_layer = folium.FeatureGroup(
+    name="Cities > 500k"
+)
 
 
 # =========================================================
@@ -214,7 +242,7 @@ for idx, row in wildfires.iterrows():
     # =========================================================
     # RISK LAYER MARKER
     # =========================================================
-
+    
     folium.CircleMarker(
         location=[latitude, longitude],
         radius=max(4, min(frp / 10, 15)),
@@ -263,6 +291,42 @@ for idx, row in wildfires.iterrows():
         tooltip=f"Risk: {risk_score}"
     ).add_to(frp_layers[frp_class])
 
+
+# =========================================================
+# ADD CITIES TO MAP
+# =========================================================
+
+print("Adding cities to map...")
+
+for idx, row in cities.iterrows():
+
+    latitude = row.geometry.y
+    longitude = row.geometry.x
+
+    city_name = row["city"]
+    country = row["country"]
+    population = int(row["population"])
+
+    popup_html = f"""
+    <b>{city_name}</b><br>
+    <hr>
+    <b>Country:</b> {country}<br>
+    <b>Population:</b> {population:,}
+    """
+
+    folium.CircleMarker(
+        location=[latitude, longitude],
+        radius=5,
+        color="blue",
+        fill=True,
+        fill_color="blue",
+        fill_opacity=0.6,
+        weight=1,
+        popup=folium.Popup(popup_html, max_width=250),
+        tooltip=city_name
+    ).add_to(city_layer)
+
+city_layer.add_to(m)
 
 # =========================================================
 # ADD FILTER LAYERS TO MAP

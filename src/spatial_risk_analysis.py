@@ -24,9 +24,9 @@ Required Input:
 
 
 Generated Output:
-- outputs/high_risk_wildfires.gpkg
-- outputs/high_risk_wildfires.csv
-- outputs/maps/global_wildfire_risk_map.png
+- data/outputs/high_risk_wildfires.gpkg
+- data/outputs/high_risk_wildfires.csv
+- maps/global_wildfire_risk_map.png
 """
 # =========================================================
 # IMPORT LIBRARIES
@@ -46,7 +46,7 @@ from shapely.geometry import Point
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 PROCESSED_DATA = BASE_DIR / "data" / "processed"
-OUTPUT_DIR = BASE_DIR / "outputs"
+OUTPUT_DIR = BASE_DIR / "data" /"outputs"
 MAP_DIR = OUTPUT_DIR / "maps"
 
 OUTPUT_DIR.mkdir(parents=True, exist_ok=True)

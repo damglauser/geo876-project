@@ -47,9 +47,9 @@ def download_firms_data():
     # Time range (in days) for wildfire detections
     DAY_RANGE = 3
 
-    # =========================================================
-    # 2.1 DEFINE PROJECT ROOT IN SCRIPT
-    # =========================================================
+ # =========================================================
+ # DEFINE PROJECT ROOT IN SCRIPT
+ # =========================================================
 
     # __file__ returns the location of the current script.
 
@@ -67,7 +67,7 @@ def download_firms_data():
     OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
 
     # Print paths for potential debugging
-    print("Step 2.1: Project root:")
+    print("Project root:")
     print(PROJECT_ROOT)
 
     print("\nOutput directory:")
