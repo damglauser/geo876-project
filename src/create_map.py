@@ -293,6 +293,20 @@ for idx, row in wildfires.iterrows():
 
 
 # =========================================================
+# ADD FILTER LAYERS TO MAP
+# =========================================================
+
+for layer in risk_layers.values():
+    layer.add_to(m)
+
+for layer in confidence_layers.values():
+    layer.add_to(m)
+
+for layer in frp_layers.values():
+    layer.add_to(m)
+
+
+# =========================================================
 # ADD CITIES TO MAP
 # =========================================================
 
@@ -327,19 +341,6 @@ for idx, row in cities.iterrows():
     ).add_to(city_layer)
 
 city_layer.add_to(m)
-
-# =========================================================
-# ADD FILTER LAYERS TO MAP
-# =========================================================
-
-for layer in risk_layers.values():
-    layer.add_to(m)
-
-for layer in confidence_layers.values():
-    layer.add_to(m)
-
-for layer in frp_layers.values():
-    layer.add_to(m)
 
 
 # =========================================================
